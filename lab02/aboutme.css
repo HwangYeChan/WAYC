@@ -1,0 +1,78 @@
+body {
+	font-family: "Helvetica","Verdana",sans-serif;
+}
+
+h1 {
+	font-size: 40pt;
+	text-shadow: 3px -3px green;
+}
+
+h1,h2{
+	color: #F7931E;	
+}
+
+dl{
+	font-size: 70%;
+}
+
+dt{
+	font-weight: bold;
+}
+
+body{
+	color: #939396;
+	background-color: #1D2475;
+	background-image:url("cse326bg.jpg");
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+strong,dl dt{
+	color: #FFF86B;
+}
+
+a{
+	color: #FF4F4F;
+	text-decoration: none;
+}
+
+a:visited{
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+
+ul,ol,blockquote{
+	text-align: left;
+}
+
+ul{
+	list-style-type: square;
+}
+
+q{
+	color: #D1DFEB;
+}
+
+table{
+	border-collapse:collapse;
+}
+
+td,table{
+	border:2px solid black;
+}
+
+img {
+	border:medium solid #F7931E;
+}
+
+img.val{
+	border:none;
+}
+
+.first_word{
+	font-weight: bold;
+	font-size:150%;
+}
