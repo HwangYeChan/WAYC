@@ -1,0 +1,176 @@
+CREATE DATABASE college;
+
+USE college;
+
+CREATE TABLE student(
+	student_id INTEGER PRIMARY KEY,
+	name VARCHAR(20) NOT NULL,
+	year TINYINT NOT NULL DEFAULT 1,
+	dept_no INTEGER NOT NULL,
+	major VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE department(
+	dept_no INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	dept_name VARCHAR(40) NOT NULL UNIQUE,
+	office VARCHAR(30) NOT NULL,
+	office_tel VARCHAR(13)
+);
+
+ALTER TABLE student MODIFY major VARCHAR(30);
+ALTER TABLE student ADD COLUMN gender VARCHAR(10);
+
+
+
+
+ALTER TABLE student DROP COLUMN gender;
+
+INSERT INTO student VALUES (20070002, 'Jane Smith', 3, 4, 'Business Administration');
+INSERT INTO student VALUES (20060001, 'Ashley Jackson', 4, 4, 'Business Administration');
+INSERT INTO student VALUES (20030001, 'Liam Johnson', 4, 2, 'Electrical Engineering');
+INSERT INTO student VALUES (20040003, 'Jacob Lee', 3, 2, 'Electrical Engineering');
+INSERT INTO student VALUES (20060002, 'Noah Kim', 3, 1, 'Computer Science');
+INSERT INTO student VALUES (20100002, 'Ava Lim', 3, 4, 'Business Administration');
+INSERT INTO student VALUES (20110001, 'Emma Watson', 2, 1, 'Computer Science');
+INSERT INTO student VALUES (20080003, 'Lisa Maria', 4, 3, 'Law');
+INSERT INTO student VALUES (20040002, 'Jacob William', 4, 5, 'Law');
+INSERT INTO student VALUES (20070001, 'Emily Rose', 4, 4, 'Business Administration');
+INSERT INTO student VALUES (20100001, 'Ethan Hunt', 3, 4, 'Business Administration');
+INSERT INTO student VALUES (20110002, 'Jason Mraz', 2, 1, 'Electrical Engineering');
+INSERT INTO student VALUES (20030002, 'John Smith', 5, 1, 'Computer Science');
+INSERT INTO student VALUES (20070003, 'Sophia Park', 4, 3, 'Law');
+INSERT INTO student VALUES (20070007, 'James Michael', 2, 4, 'Business Administration');
+INSERT INTO student VALUES (20100003, 'James Bond', 3, 1, 'Computer Science');
+INSERT INTO student VALUES (20070005, 'Olivia Madison', 2, 5, 'English Language and Literature');
+
+INSERT INTO department(dept_name, office, office_tel) VALUES ('Computer Science', 'Science Building 101', '02-3290-0123');
+INSERT INTO department(dept_name, office, office_tel) VALUES ('Electrical Engineering', 'Engineering Building 401', '02-3290-2345');
+INSERT INTO department(dept_name, office, office_tel) VALUES ('Law', 'Law Building 201', '02-3290-7896');
+INSERT INTO department(dept_name, office, office_tel) VALUES ( 'Business Administration', 'Business Building 104', '02-3290-1112');
+INSERT INTO department(dept_name, office, office_tel) VALUES ('English Language and Literature', 'Language Building 303', '02-3290-4412');
+
+
+
+UPDATE student 
+SET major='Electrical and Electronics Engineering'
+WHERE major='Electrical Engineering';
+
+
+INSERT INTO department(dept_name,office,office_tel) VALUES ('Special Education','Education Building 403' ,'02-3290-2347');
+
+UPDATE student
+SET major='Special Education' ,dept_no=6
+WHERE name='Emma Watson';
+
+DELETE FROM student
+WHERE name='Jason Mraz';
+
+DELETE FROM student
+WHERE name='John Smith';
+
+
+
+
+SELECT * 
+FROM student 
+WHERE major='Computer Science';
+
+SELECT student_id,year,major 
+FROM student ;
+
+SELECT *
+FROM student
+WHERE year=3;
+
+SELECT *
+FROM student
+WHERE year=1 OR year=2;
+
+SELECT * 
+FROM student
+WHERE dept_no = (
+	SELECT dept_no
+	FROM department
+	WHERE dept_name='Business Administration'
+);
+
+
+
+
+
+
+SELECT *
+FROM student
+WHERE student_id LIKE '2007%';
+
+SELECT *
+FROM student
+ORDER BY student_id;
+
+SELECT *
+FROM student
+GROUP BY major
+HAVING avg(year) > 3;
+
+SELECT *
+FROM student
+WHERE major='Business Administration' AND student_id LIKE '%2007%' LIMIT 2;
+
+
+
+
+
+select role
+from roles r
+join movies m on r.movie_id=m.id
+where m.name='Pi';
+
+select first_name, last_name
+from roles r
+join movies m on r.movie_id=m.id
+join actors a on a.id=r.actor_id
+where m.name='Pi';
+
+
+select first_name,last_name,count(movie_id)
+from roles join actors on id=actor_id
+group by actor_id 
+order by count(movie_id) DESC limit 7;
+
+select genre, count(movie_id)
+from movies_genres
+group by genre
+order by count(movie_id) DESC limit 3;
+
+select first_name,last_name,count(director_id)
+from movies_directors md 
+join movies_genres mg on md.movie_id=mg.movie_id
+join directors d on d.id=md.director_id
+where mg.genre='Thriller'
+group by md.director_id
+order by count(director_id) DESC limit 1;
+
+
+
+select distinct grade
+from courses c
+join grades g on c.id=g.course_id
+where c.name='Computer Science 143';
+
+select s.name,grade
+from students s
+join grades g on s.id=g.student_id
+join courses c on c.id=g.course_id
+where (g.grade like 'B%' or g.grade like 'A%') and c.name='Computer Science 143';
+
+select s.name,c.name,grade
+from students s
+join grades g on s.id=g.student_id
+join courses c on c.id=g.course_id
+where g.grade like 'B%' or g.grade like 'A%';
+
+select name
+from grades
+join courses on course_id=id
+group by(course_id)
+having count(student_id)>=2;
